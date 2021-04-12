@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "tn.atconsulting.at.apioffice"
+    },
+    "jhipsterVersion": "6.10.5",
+    "applicationType": "microservice",
+    "baseName": "attconsulting",
+    "packageName": "tn.atconsulting.at.apioffice",
+    "packageFolder": "tn/atconsulting/at/apioffice",
+    "serverPort": "8082",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZjM1MTZjMDBhMGIyMWEwNTlmY2FmMGIyMmEyYWE1N2RhOGYwN2RmODg5N2ZjNmQ5ZmMzMWI5MzUwMmNjNjM3Y2EzZjcxMDBkZTU4ZDA5NjQyMjlhMmQ4MDA5YjNiYTE4NGUxZTBiOWYyZTg2ZTM3OTk2M2IwOTE3ZWUyNmFhYTU=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1616869709403,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
