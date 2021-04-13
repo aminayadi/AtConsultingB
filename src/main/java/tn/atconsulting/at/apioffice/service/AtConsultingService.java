@@ -38,6 +38,7 @@ public class AtConsultingService {
 	        con.setUseCaches(false);
 	        con.setRequestMethod("GET");
 	        con.setRequestProperty("Authorization","Bearer " + connectionDTO.getBearer_token());
+	        System.out.println("Token : " + connectionDTO.getBearer_token());
 	        con.setRequestProperty("Accept","application/json"); // I added this line.
 	        con.connect();
 
@@ -47,7 +48,7 @@ public class AtConsultingService {
 	        while((line = br.readLine()) != null){
 	            str += line;
 	        }
-	        System.out.println(str);
+	        System.out.println("Aminos : " + str);
 	        return ResponseEntity.ok().body(str); 
 	    } catch (Exception e) {
 	    	System.out.println("ERROR : "+e.toString());
