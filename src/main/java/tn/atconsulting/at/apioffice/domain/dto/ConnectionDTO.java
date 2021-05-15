@@ -13,6 +13,15 @@ public class ConnectionDTO implements Serializable {
 
 	@NotNull
 	protected String bearer_token;
+	protected String idFolder;
+
+	public String getIdFolder() {
+		return idFolder;
+	}
+
+	public void setIdFolder(String idFolder) {
+		this.idFolder = idFolder;
+	}
 
 	public String getBearer_token() {
 		return bearer_token;
