@@ -151,25 +151,24 @@ jhipster:
   clientApp:
     name: 'attconsultingApp'
   # By default CORS is disabled. Uncomment to enable.
-  # cors:
-  #     allowed-origins: "*"
-  #     allowed-methods: "*"
-  #     allowed-headers: "*"
-  #     exposed-headers: "Authorization,Link,X-Total-Count"
-  #     allow-credentials: true
-  #     max-age: 1800
+  cors:
+       allowed-origins: "*"
+       allowed-methods: "*"
+       allowed-headers: "*"
+       exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
+       max-age: 3600
   mail:
     from: attconsulting@localhost
   swagger:
     default-include-pattern: /api/.*
     title: attconsulting API
     description: attconsulting API documentation
-    version: 0.0.1
+    version: 
     terms-of-service-url:
     contact-name:
     contact-url:
     contact-email:
-    license: unlicensed
+    license: 
     license-url:
 # ===================================================================
 # Application specific properties
