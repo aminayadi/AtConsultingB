@@ -3,7 +3,8 @@ package tn.atconsulting.at.apioffice.web.rest;
 
 import java.util.List;
 
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
 import tn.atconsulting.at.apioffice.service.AtConsultingService;
 import tn.atconsulting.at.apioffice.service.ClientService;
+
 
 
 
@@ -52,7 +54,17 @@ public class AtconsultingRestController {
 		List<Client> list = clientService.retrieveAllClient(); 
 		return list; 
 	} 
-	
+	@RequestMapping(value = "/GetOneById/{idC}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Client> getClient(@PathVariable("idC") Long idC) {
+    	//logger.debug("Invocation de la resource : GET /GetOne/{idB}");
+    	Client client = clientService.retrieveClient(idC);
+
+        if (client == null) {
+        	//logger.info("Impossible de récupérer le client");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(client, HttpStatus.OK);
+    }
 	
 	
 	

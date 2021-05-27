@@ -22,7 +22,7 @@ private static final long serialVersionUID = 1L;
 	
 	private String name;
 	private String type;
-	private String address;
+	private String adress;
 	private String secrétaire_général;
 	private String email;
 	private String num_telefone;
@@ -47,12 +47,7 @@ private static final long serialVersionUID = 1L;
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
 	public String getSecrétaire_général() {
 		return secrétaire_général;
 	}
@@ -76,9 +71,15 @@ private static final long serialVersionUID = 1L;
 	}
 	@Override
 	public String toString() {
-		return "client [id=" + id + ", name=" + name + ", type=" + type + ", address=" + address
+		return "client [id=" + id + ", name=" + name + ", type=" + type + ", address=" + adress
 				+ ", secrétaire_général=" + secrétaire_général + ", email=" + email + ", num_telefone=" + num_telefone
 				+ "]";
+	}
+	public String getAdress() {
+		return adress;
+	}
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
 	
 	

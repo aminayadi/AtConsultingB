@@ -14,6 +14,7 @@ import tn.atconsulting.at.apioffice.repository.ClientRepository;
 
 
 
+
 @Service
 public class ClientService {
 	
@@ -57,6 +58,14 @@ public class ClientService {
 		return cl ;
 	}
 	*/
+	
+
+	public Client retrieveClient(Long id) {
+		// TODO Auto-generated method stub
+		Client u= clientRepository.findById(id).orElse(null);;
+		//L.info("retrive bank by id ++++:"+u);
+		return u;
+	}
 	
 
 }
