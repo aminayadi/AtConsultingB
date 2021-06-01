@@ -1,6 +1,7 @@
 package tn.atconsulting.at.apioffice.web.rest;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
+import tn.atconsulting.at.apioffice.domain.dto.Holder;
 import tn.atconsulting.at.apioffice.service.AtConsultingService;
 import tn.atconsulting.at.apioffice.service.ClientService;
 
@@ -37,9 +39,10 @@ public class AtconsultingRestController {
 
 	
 	@PostMapping("/ajouterClient")
-	public Client ajouterClient(@RequestBody Client client) {
-		
-		return this.clientService.addClient(client);
+	public Client ajouterClient(@RequestBody Holder holder)  {
+		Client client = holder.getClient();
+		ConnectionDTO connectionDTO = holder.getConnection();
+		return this.clientService.addClient(client, connectionDTO);
 
 	}
 

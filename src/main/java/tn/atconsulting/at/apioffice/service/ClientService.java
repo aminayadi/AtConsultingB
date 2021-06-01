@@ -1,13 +1,25 @@
 package tn.atconsulting.at.apioffice.service;
 
+
+import java.net.HttpURLConnection;
+
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
 import java.util.List;
 
-import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+
+
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 import tn.atconsulting.at.apioffice.domain.dto.Client;
+import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
 import tn.atconsulting.at.apioffice.repository.ClientRepository;
 
 
@@ -20,9 +32,43 @@ public class ClientService {
 	
 	@Autowired
 	ClientRepository clientRepository;
+	ConnectionDTO connectionDTO;
 	
-	
-	public Client addClient(Client cl) {
+	@SuppressWarnings("deprecation")
+	public Client addClient(Client cl,ConnectionDTO connectionDTO)  {
+		//TO DO : Call azure AD WS
+		HttpURLConnection con = null;
+        String url_str = "https://graph.microsoft.com/v1.0/me/drive/root/children";
+        String jsonInputString ="";
+        String authorizationHeader = "Bearer " + connectionDTO.getBearer_token();
+        URL url;
+		try {
+
+        jsonInputString =("{\r\n  \"name\": \"spring boot\",\r\n  \"folder\": { },\r\n  \"@microsoft.graph.conflictBehavior\": \"rename\"\r\n}");
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url_str))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
+                .header("Authorization", authorizationHeader)
+                .header("Content-Type", "application/json")
+                .build()
+                ;
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.body());
+        
+        
+        
+        
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+			System.out.println("ERROR AMINNN: "+e.toString());
+		}
+
 		return this.clientRepository.save(cl);
 	}
 	
