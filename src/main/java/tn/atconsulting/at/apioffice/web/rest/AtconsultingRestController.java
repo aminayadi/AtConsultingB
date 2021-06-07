@@ -18,10 +18,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.atconsulting.at.apioffice.domain.dto.Client;
+import tn.atconsulting.at.apioffice.domain.dto.Notification;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
+import tn.atconsulting.at.apioffice.domain.dto.Event;
+import tn.atconsulting.at.apioffice.domain.dto.EventH;
 import tn.atconsulting.at.apioffice.domain.dto.Holder;
+import tn.atconsulting.at.apioffice.domain.dto.Log;
+import tn.atconsulting.at.apioffice.domain.dto.LogH;
+import tn.atconsulting.at.apioffice.domain.dto.News;
+import tn.atconsulting.at.apioffice.domain.dto.NewsH;
+import tn.atconsulting.at.apioffice.domain.dto.NotificationH;
+import tn.atconsulting.at.apioffice.domain.dto.Tags;
+import tn.atconsulting.at.apioffice.domain.dto.TagsH;
 import tn.atconsulting.at.apioffice.service.AtConsultingService;
 import tn.atconsulting.at.apioffice.service.ClientService;
+import tn.atconsulting.at.apioffice.service.EventService;
+import tn.atconsulting.at.apioffice.service.LogService;
+import tn.atconsulting.at.apioffice.service.NewsService;
+import tn.atconsulting.at.apioffice.service.NotificationService;
+import tn.atconsulting.at.apioffice.service.TagsService;
 
 
 
@@ -34,9 +49,11 @@ public class AtconsultingRestController {
 	
 	private final     AtConsultingService atconsultingservice;
 	private final     ClientService clientService;
-
-	
-
+	private final     NotificationService notificationService;
+	private final     LogService logService;
+	private final     EventService eventService;
+	private final     NewsService newsService;
+	private final     TagsService tagsService;
 	
 	@PostMapping("/ajouterClient")
 	public Client ajouterClient(@RequestBody Holder holder)  {
@@ -74,9 +91,17 @@ public class AtconsultingRestController {
 	
 	
 	
-	public AtconsultingRestController(AtConsultingService atconsultingservice, ClientService clientService) {
+	public AtconsultingRestController(AtConsultingService atconsultingservice, ClientService clientService,NotificationService notificationservice,LogService logService,EventService eventService,NewsService newsService,TagsService tagsService) {
 		this.atconsultingservice = atconsultingservice;
 		this.clientService = clientService ;
+		this.notificationService=notificationservice;
+		this.logService =logService;
+		this.eventService = eventService;
+		this.newsService =newsService;
+		this.tagsService =tagsService;
+		
+		
+		
 	}
 	
     
@@ -89,6 +114,127 @@ public class AtconsultingRestController {
     public  ResponseEntity<String> getSubfolder(@RequestBody ConnectionDTO connectionDTO) {
         return atconsultingservice.nodeRoot(connectionDTO);
     }    
+    //----------------------Notification----------------------------
+    
+    
+    
+    @PostMapping("/ajouterNotification")
+	public Notification ajouterNotification(@RequestBody NotificationH notificationh)  {
+		Notification notification = notificationh.getNotification();
+		return this.notificationService.addNotification(notification);
+
+	}
+    
+    @GetMapping("/AllNotification")
+	@ResponseBody
+	public List<Notification> getWisLists() { 
+		List<Notification> list = notificationService.retrieveAllNotification(); 
+		return list; 
+	} 
+    @RequestMapping(value = "/DeleteNotification/{idN}", method = RequestMethod.DELETE)
+    public String deleteNotification(@PathVariable("idN") Long idN){
+		return this.notificationService.deleteNotification(idN);
+    }
+    
+    
+    
+    
+//----------------------Tags----------------------------
+    
+    
+    
+    @PostMapping("/ajouterTags")
+	public Tags ajouterTags(@RequestBody TagsH tagsh)  {
+    	Tags tags = tagsh.getTags();
+		return this.tagsService.addTags(tags);
+
+	}
+    
+    @GetMapping("/AllTags")
+	@ResponseBody
+	public List<Tags> getTagsLists() { 
+		List<Tags> list = tagsService.retrieveAllTags(); 
+		return list; 
+	} 
+    @RequestMapping(value = "/DeleteTags/{idTags}", method = RequestMethod.DELETE)
+    public String deleteTags(@PathVariable("idTags") Long idTags){
+		return this.tagsService.deleteTags(idTags);
+    }
+    
+    
+    
+    
+//----------------------Log----------------------------
+    
+    
+    
+    @PostMapping("/ajouterLog")
+	public Log ajouterLog(@RequestBody LogH logh)  {
+    	Log log = logh.getLog();
+		return this.logService.addLog(log);
+
+	}
+    
+    @GetMapping("/AllLog")
+	@ResponseBody
+	public List<Log> getLogLists() { 
+		List<Log> list = logService.retrieveAllLog(); 
+		return list; 
+	} 
+    @RequestMapping(value = "/DeleteLog/{idN}", method = RequestMethod.DELETE)
+    public String deleteLog(@PathVariable("idLog") Long idLog){
+		return this.logService.deleteLog(idLog);
+    }
+    
+    
+    
+    
+//----------------------Event----------------------------
+    
+    
+    
+    @PostMapping("/ajouterEvent")
+	public Event ajouterEvent(@RequestBody EventH eventh)  {
+    	Event event = eventh.getEvent();
+		return this.eventService.addEvent(event);
+
+	}
+    
+    @GetMapping("/AllEvent")
+	@ResponseBody
+	public List<Event> getEventLists() { 
+		List<Event> list = eventService.retrieveAllEvent(); 
+		return list; 
+	} 
+    @RequestMapping(value = "/DeleteEvent/{idEvent}", method = RequestMethod.DELETE)
+    public String deleteEvent(@PathVariable("idEvent") Long idEvent){
+		return this.eventService.deleteEvent(idEvent);
+    }
+    
+    
+    
+    
+//----------------------News----------------------------
+    
+    
+    
+    @PostMapping("/ajouterNews")
+  	public News ajouterNews(@RequestBody NewsH newsh)  {
+      	News news = newsh.getNews();
+  		return this.newsService.addNews(news);
+
+  	}
+      
+    @GetMapping("/AllNews")
+	@ResponseBody
+	public List<News> getNewsLists() { 
+		List<News> list = newsService.retrieveAllNews(); 
+		return list; 
+	} 
+    @RequestMapping(value = "/DeleteNews/{idNews}", method = RequestMethod.DELETE)
+    public String deleteNews(@PathVariable("idNews") Long idNews){
+		return this.newsService.deleteNews(idNews);
+    }
     
 
 }

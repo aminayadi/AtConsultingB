@@ -21,6 +21,7 @@ import java.net.http.HttpResponse;
 import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
 import tn.atconsulting.at.apioffice.repository.ClientRepository;
+import tn.atconsulting.at.apioffice.domain.dto.Notification;
 
 
 
@@ -43,9 +44,9 @@ public class ClientService {
         String authorizationHeader = "Bearer " + connectionDTO.getBearer_token();
         URL url;
 		try {
-
-        jsonInputString =("{\r\n  \"name\": \"spring boot\",\r\n  \"folder\": { },\r\n  \"@microsoft.graph.conflictBehavior\": \"rename\"\r\n}");
-
+			 System.out.println("hatemm      ------- aminnnnnn ----(--"+cl.getName());
+        jsonInputString =("{\r\n  \"name\": \""+cl.getName() + "\",\r\n  \"folder\": { },\r\n  \"@microsoft.graph.conflictBehavior\": \"rename\"\r\n}");
+       
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url_str))

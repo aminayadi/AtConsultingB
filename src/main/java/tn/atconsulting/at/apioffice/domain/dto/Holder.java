@@ -13,13 +13,17 @@ public class Holder implements Serializable {
 
 	@NotNull
 	protected Client client;
-	protected ConnectionDTO connection;
+	
+	ConnectionDTO connection;
 	public Client getClient() {
 		return client;
 	}
+	
+	
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	
 	public ConnectionDTO getConnection() {
 		return connection;
 	}
