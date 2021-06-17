@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,11 +16,14 @@ public class Log implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne
+	Client client;
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	
 	private long idLog;
-	private int idUser;
+	private int idClient;
 	private String OpDescription;
 	private String Date;
 	private String Deleted;
@@ -29,11 +33,12 @@ public class Log implements Serializable{
 	public void setIdLog(long idLog) {
 		this.idLog = idLog;
 	}
-	public int getIdUser() {
-		return idUser;
+	
+	public int getIdClient() {
+		return idClient;
 	}
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setIdClient(int idClient) {
+		this.idClient = idClient;
 	}
 	public String getOpDescription() {
 		return OpDescription;
@@ -50,6 +55,13 @@ public class Log implements Serializable{
 	public String getDeleted() {
 		return Deleted;
 	}
+	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 	public void setDeleted(String deleted) {
 		Deleted = deleted;
 	}
@@ -58,8 +70,8 @@ public class Log implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Log [idLog=" + idLog + ", idUser=" + idUser + ", OpDescription=" + OpDescription + ", Date=" + Date
-				+ ", Deleted=" + Deleted + "]";
+		return "Log [client=" + client + ", idLog=" + idLog + ", idClient=" + idClient + ", OpDescription="
+				+ OpDescription + ", Date=" + Date + ", Deleted=" + Deleted + "]";
 	}
 	
 

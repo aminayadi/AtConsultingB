@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +20,9 @@ public class News implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	
 	private long idNews;
-	private int idTags;
+	
+	@ManyToOne
+	private Tags tags ;	
 	private String title;
 	private String content;
 	private String creationDate;
@@ -31,12 +34,7 @@ public class News implements Serializable {
 	public void setIdNews(long idNews) {
 		this.idNews = idNews;
 	}
-	public int getIdTags() {
-		return idTags;
-	}
-	public void setIdTags(int idTags) {
-		this.idTags = idTags;
-	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -70,12 +68,19 @@ public class News implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public Tags getTags() {
+		return tags;
+	}
+	public void setTags(Tags tags) {
+		this.tags = tags;
+	}
 	@Override
 	public String toString() {
-		return "News [idNews=" + idNews + ", idTags=" + idTags + ", title=" + title + ", content=" + content
+		return "News [idNews=" + idNews + ", tags=" + tags + ", title=" + title + ", content=" + content
 				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + ", deleted=" + deleted
 				+ "]";
 	}
+
 	
 	
 	

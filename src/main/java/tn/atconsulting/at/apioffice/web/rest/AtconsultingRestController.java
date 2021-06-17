@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,17 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.Notification;
+import tn.atconsulting.at.apioffice.domain.dto.Role;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
 import tn.atconsulting.at.apioffice.domain.dto.Event;
-import tn.atconsulting.at.apioffice.domain.dto.EventH;
+
 import tn.atconsulting.at.apioffice.domain.dto.Holder;
 import tn.atconsulting.at.apioffice.domain.dto.Log;
-import tn.atconsulting.at.apioffice.domain.dto.LogH;
+
 import tn.atconsulting.at.apioffice.domain.dto.News;
-import tn.atconsulting.at.apioffice.domain.dto.NewsH;
-import tn.atconsulting.at.apioffice.domain.dto.NotificationH;
 import tn.atconsulting.at.apioffice.domain.dto.Tags;
-import tn.atconsulting.at.apioffice.domain.dto.TagsH;
 import tn.atconsulting.at.apioffice.service.AtConsultingService;
 import tn.atconsulting.at.apioffice.service.ClientService;
 import tn.atconsulting.at.apioffice.service.EventService;
@@ -37,6 +36,7 @@ import tn.atconsulting.at.apioffice.service.LogService;
 import tn.atconsulting.at.apioffice.service.NewsService;
 import tn.atconsulting.at.apioffice.service.NotificationService;
 import tn.atconsulting.at.apioffice.service.TagsService;
+import tn.atconsulting.at.apioffice.service.RoleService;
 
 
 
@@ -54,12 +54,21 @@ public class AtconsultingRestController {
 	private final     EventService eventService;
 	private final     NewsService newsService;
 	private final     TagsService tagsService;
+	private final     RoleService roleService;
 	
 	@PostMapping("/ajouterClient")
 	public Client ajouterClient(@RequestBody Holder holder)  {
 		Client client = holder.getClient();
 		ConnectionDTO connectionDTO = holder.getConnection();
 		return this.clientService.addClient(client, connectionDTO);
+
+	}
+	
+	@PutMapping("/ajouterPhoto")
+	public String ajouterPhoto(@RequestBody  Holder holder)  {
+		ConnectionDTO connectionDTO = holder.getConnection();
+		
+		return this.clientService.addPhoto(connectionDTO);
 
 	}
 
@@ -91,7 +100,7 @@ public class AtconsultingRestController {
 	
 	
 	
-	public AtconsultingRestController(AtConsultingService atconsultingservice, ClientService clientService,NotificationService notificationservice,LogService logService,EventService eventService,NewsService newsService,TagsService tagsService) {
+	public AtconsultingRestController(AtConsultingService atconsultingservice, ClientService clientService,NotificationService notificationservice,LogService logService,EventService eventService,NewsService newsService,TagsService tagsService,RoleService roleService) {
 		this.atconsultingservice = atconsultingservice;
 		this.clientService = clientService ;
 		this.notificationService=notificationservice;
@@ -99,6 +108,7 @@ public class AtconsultingRestController {
 		this.eventService = eventService;
 		this.newsService =newsService;
 		this.tagsService =tagsService;
+		this.roleService=roleService;
 		
 		
 		
@@ -119,8 +129,8 @@ public class AtconsultingRestController {
     
     
     @PostMapping("/ajouterNotification")
-	public Notification ajouterNotification(@RequestBody NotificationH notificationh)  {
-		Notification notification = notificationh.getNotification();
+	public Notification ajouterNotification(@RequestBody Notification notification)  {
+		
 		return this.notificationService.addNotification(notification);
 
 	}
@@ -144,8 +154,8 @@ public class AtconsultingRestController {
     
     
     @PostMapping("/ajouterTags")
-	public Tags ajouterTags(@RequestBody TagsH tagsh)  {
-    	Tags tags = tagsh.getTags();
+	public Tags ajouterTags(@RequestBody Tags tags)  {
+    
 		return this.tagsService.addTags(tags);
 
 	}
@@ -169,8 +179,8 @@ public class AtconsultingRestController {
     
     
     @PostMapping("/ajouterLog")
-	public Log ajouterLog(@RequestBody LogH logh)  {
-    	Log log = logh.getLog();
+	public Log ajouterLog(@RequestBody Log log)  {
+    	
 		return this.logService.addLog(log);
 
 	}
@@ -194,8 +204,8 @@ public class AtconsultingRestController {
     
     
     @PostMapping("/ajouterEvent")
-	public Event ajouterEvent(@RequestBody EventH eventh)  {
-    	Event event = eventh.getEvent();
+	public Event ajouterEvent(@RequestBody Event event)  {
+    	
 		return this.eventService.addEvent(event);
 
 	}
@@ -219,8 +229,8 @@ public class AtconsultingRestController {
     
     
     @PostMapping("/ajouterNews")
-  	public News ajouterNews(@RequestBody NewsH newsh)  {
-      	News news = newsh.getNews();
+  	public News ajouterNews(@RequestBody News news)  {
+      	
   		return this.newsService.addNews(news);
 
   	}
@@ -235,6 +245,26 @@ public class AtconsultingRestController {
     public String deleteNews(@PathVariable("idNews") Long idNews){
 		return this.newsService.deleteNews(idNews);
     }
+    
+    //------------Role----------------------
+    @PostMapping("/ajouterRole")
+  	public Role ajouterRole(@RequestBody Role role)  {
+      	
+  		return this.roleService.addRole(role);
+
+  	}
+      
+    @GetMapping("/AllRole")
+	@ResponseBody
+	public List<Role> getRoleLists() { 
+		List<Role> list = roleService.retrieveAllRole(); 
+		return list; 
+	} 
+    @RequestMapping(value = "/DeleteNews/{idRole}", method = RequestMethod.DELETE)
+    public String deleteRole(@PathVariable("idRole") Long idRole){
+		return this.roleService.deleteRole(idRole);
+    }
+    
     
 
 }

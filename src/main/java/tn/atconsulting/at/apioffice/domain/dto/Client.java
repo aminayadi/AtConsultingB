@@ -4,9 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 
 
 
@@ -15,10 +20,15 @@ import javax.persistence.Id;
 public class Client implements Serializable{
 	
 private static final long serialVersionUID = 1L;
+	/*
+	@ManyToOne
+	Role role;
 	
+	*/
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private long idClient;
+	private long idRole ;
 	private String name;
 	private String email;
 	private String adress;
@@ -26,14 +36,43 @@ private static final long serialVersionUID = 1L;
 	private String contact;
 	private String type;	
 	//=========================Getters and Setters =========================//
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
+	
 	public String getName() {
 		return name;
+	}
+	
+
+/*
+	public Role getRole() {
+		return role;
+	}
+
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+*/
+
+	public long getIdRole() {
+		return idRole;
+	}
+
+
+
+	public void setIdRole(long idRole) {
+		this.idRole = idRole;
+	}
+
+
+
+	public long getIdClient() {
+		return idClient;
+	}
+	public void setIdClient(long idClient) {
+		this.idClient = idClient;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -71,11 +110,23 @@ private static final long serialVersionUID = 1L;
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", email=" + email + ", adress=" + adress + ", phone=" + phone
-				+ ", contact=" + contact + ", type=" + type + "]";
+		return "Client [idClient=" + idClient + ", idRole=" + idRole + ", name=" + name + ", email=" + email
+				+ ", adress=" + adress + ", phone=" + phone + ", contact=" + contact + ", type=" + type + "]";
 	}
+
+
+
+	
+
+
+
+	
+
+
 	
 	
 	

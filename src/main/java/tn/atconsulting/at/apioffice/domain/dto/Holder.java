@@ -13,8 +13,8 @@ public class Holder implements Serializable {
 
 	@NotNull
 	protected Client client;
-	
 	ConnectionDTO connection;
+	
 	public Client getClient() {
 		return client;
 	}

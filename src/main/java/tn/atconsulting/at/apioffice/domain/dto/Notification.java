@@ -2,11 +2,14 @@ package tn.atconsulting.at.apioffice.domain.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TemporalType;
 
@@ -25,17 +28,15 @@ public class Notification implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@OneToMany 
+	private Set<Client> clients;
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	
 	private long idN;
 	private String text;
-	private int idC;
 	private String subject;
-
 	private	String  creationDate;
-
-	
 	public String  expirationDate;
 	public String deleted;
 	
@@ -50,6 +51,7 @@ public class Notification implements Serializable{
 	public String getText() {
 		return text;
 	}
+	
 	public long getIdN() {
 		return idN;
 	}
@@ -59,12 +61,7 @@ public class Notification implements Serializable{
 	public void setText(String text) {
 		this.text = text;
 	}
-	public int getIdC() {
-		return idC;
-	}
-	public void setIdC(int idC) {
-		this.idC = idC;
-	}
+
 	public String getSubject() {
 		return subject;
 	}
@@ -87,15 +84,28 @@ public class Notification implements Serializable{
 	public String getExpirationDate() {
 		return expirationDate;
 	}
+
+
 	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
+	
+
+	
+	public Set<Client> getClients() {
+		return clients;
+	}
+	public void setClients(Set<Client> clients) {
+		this.clients = clients;
+	}
+
 	@Override
 	public String toString() {
-		return "Notification [idN=" + idN + ", text=" + text + ", idC=" + idC + ", subject=" + subject
+		return "Notification [clients=" + clients + ", idN=" + idN + ", text=" + text + ", subject=" + subject
 				+ ", creationDate=" + creationDate + ", expirationDate=" + expirationDate + ", deleted=" + deleted
 				+ "]";
 	}
+	
 	
 	
 	
