@@ -67,7 +67,7 @@ public class ClientService {
  		
 		//-------------------------------------------------------------------
 	
-	public String addPhoto(ConnectionDTO connectionDTO)  {
+	public String addPhoto(ConnectionDTO connectionDTO,  byte [] array)  {
 		
 		
 		String url_str = "https://graph.microsoft.com/v1.0/me/drive/root:/baaaa.png:/content";
@@ -79,7 +79,7 @@ public class ClientService {
 	        String fileName = "C:\\Users\\USER\\Pictures\\png_file.png";
 	        File file = new File(fileName);
 
-	        byte [] array = Files.readAllBytes(file.toPath());
+	       // byte [] array = Files.readAllBytes(file.toPath());
 	        System.out.println(array.toString());
         HttpClient photo = HttpClient.newHttpClient();
         

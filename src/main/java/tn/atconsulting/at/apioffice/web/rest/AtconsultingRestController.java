@@ -65,10 +65,10 @@ public class AtconsultingRestController {
 	}
 	
 	@PutMapping("/ajouterPhoto")
-	public String ajouterPhoto(@RequestBody  Holder holder)  {
+	public String ajouterPhoto(@RequestBody  Holder holder, @RequestBody byte [] photo)  {
 		ConnectionDTO connectionDTO = holder.getConnection();
 		
-		return this.clientService.addPhoto(connectionDTO);
+		return this.clientService.addPhoto(connectionDTO, photo);
 
 	}
 
