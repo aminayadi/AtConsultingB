@@ -67,22 +67,21 @@ public class ClientService {
  		
 		//-------------------------------------------------------------------
 	
-	public String addPhoto(ConnectionDTO connectionDTO,  byte [] array)  {
+	public String addPhoto(ConnectionDTO connectionDTO,  byte [] array, String name)  {
 		
 		
-		String url_str = "https://graph.microsoft.com/v1.0/me/drive/root:/baaaa.png:/content";
+		String url_str = "https://graph.microsoft.com/v1.0/me/drive/" + connectionDTO.getIdFolder() + ":/"+ name + ":/content";
    
         String authorizationHeader = "Bearer " + connectionDTO.getBearer_token();
         //System.out.println("hatemm  ------ TOKEN : "+authorizationHeader);‪
 		try {
 
-	        String fileName = "C:\\Users\\USER\\Pictures\\png_file.png";
-	        File file = new File(fileName);
+	      //  String fileName = "C:\\Users\\USER\\Pictures\\png_file.png";
+	      //  File file = new File(fileName);
 
 	       // byte [] array = Files.readAllBytes(file.toPath());
 	        System.out.println(array.toString());
         HttpClient photo = HttpClient.newHttpClient();
-        
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url_str))
                 .PUT(HttpRequest.BodyPublishers.ofByteArray(array))
@@ -95,7 +94,7 @@ public class ClientService {
         
         HttpResponse<String> response = photo.send(request,
                 HttpResponse.BodyHandlers.ofString());
-        return "aycha fatma fatma";
+        return "iamge uploaded successfuly !";
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -22,6 +22,7 @@ import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.Notification;
 import tn.atconsulting.at.apioffice.domain.dto.Role;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
+import tn.atconsulting.at.apioffice.domain.dto.DPhoto;
 import tn.atconsulting.at.apioffice.domain.dto.Event;
 
 import tn.atconsulting.at.apioffice.domain.dto.Holder;
@@ -65,10 +66,10 @@ public class AtconsultingRestController {
 	}
 	
 	@PutMapping("/ajouterPhoto")
-	public String ajouterPhoto(@RequestBody  Holder holder, @RequestBody byte [] photo)  {
-		ConnectionDTO connectionDTO = holder.getConnection();
+	public String ajouterPhoto(@RequestBody  DPhoto dPhoto)  {
+		ConnectionDTO connectionDTO = dPhoto.getConnection();
 		
-		return this.clientService.addPhoto(connectionDTO, photo);
+		return this.clientService.addPhoto(connectionDTO, dPhoto.getPhoto(), dPhoto.getpName());
 
 	}
 
