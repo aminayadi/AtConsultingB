@@ -1,20 +1,19 @@
 package tn.atconsulting.at.apioffice.service;
 
 
-import java.io.File;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+
 import org.springframework.stereotype.Service;
 
-import io.undertow.util.FileUtils;
+
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
@@ -70,7 +69,7 @@ public class ClientService {
 	public String addPhoto(ConnectionDTO connectionDTO,  byte [] array, String name)  {
 		
 		
-		String url_str = "https://graph.microsoft.com/v1.0/me/drive/" + connectionDTO.getIdFolder() + ":/"+ name + ":/content";
+		String url_str = "https://graph.microsoft.com/v1.0/me/drive/root:/" + connectionDTO.getIdFolder() + name + ":/content";
    
         String authorizationHeader = "Bearer " + connectionDTO.getBearer_token();
         //System.out.println("hatemm  ------ TOKEN : "+authorizationHeader);‪

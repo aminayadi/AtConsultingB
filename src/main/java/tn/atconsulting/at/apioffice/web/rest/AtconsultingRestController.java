@@ -1,7 +1,7 @@
 package tn.atconsulting.at.apioffice.web.rest;
 
 
-import java.io.IOException;
+ 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
