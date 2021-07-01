@@ -8,12 +8,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import tn.atconsulting.at.apioffice.domain.dto.Client;
 import tn.atconsulting.at.apioffice.domain.dto.ConnectionDTO;
@@ -50,7 +54,10 @@ public class ClientService {
                 HttpResponse.BodyHandlers.ofString());
 
         System.out.println("NEJJJJJJJJHET : " + response.body());
-        
+        JsonElement root = new JsonParser().parse(response.body());
+        String folderID = root.getAsJsonObject().get("id").getAsString();
+        System.out.println("value1: "+folderID);
+        share( cl, connectionDTO,  folderID);
         
         
         
@@ -68,6 +75,9 @@ public class ClientService {
 	
 	public String addPhoto(ConnectionDTO connectionDTO,  byte [] array, String name)  {
 		
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+		Date date = new Date(System.currentTimeMillis());
+		System.out.println("BEFORE SEND IMAGE " + formatter.format(date));
 		
 		String url_str = "https://graph.microsoft.com/v1.0/me/drive/root:/" + connectionDTO.getIdFolder() + name + ":/content";
    
@@ -93,6 +103,12 @@ public class ClientService {
         
         HttpResponse<String> response = photo.send(request,
                 HttpResponse.BodyHandlers.ofString());
+        
+		
+		Date date2 = new Date(System.currentTimeMillis());
+		System.out.println("AFTER SEND IMAGE " + (date2.getTime() - date.getTime()));
+        
+        
         return "iamge uploaded successfuly !";
 
 		} catch (Exception e) {
@@ -122,31 +138,33 @@ public class ClientService {
 	
 	////////////////////////////////////////////////////////////////////////////////
 	
-	public String share(Client cl,ConnectionDTO connectionDTO)  {
+	public String share(Client cl,ConnectionDTO connectionDTO, String folderID)  {
 		//TO DO : Call azure AD WS
 
-        String url_str = "https://graph.microsoft.com/v1.0/me/drive/items/CB15C23159F83DFC!118/invite";
+        String url_str = "https://graph.microsoft.com/v1.0/me/drive/items/"+folderID+"/invite";
         //String url_str = "https://graph.microsoft.com/v1.0/me/drive/root/children";
         String jsonInputString ="";
         String authorizationHeader ="Bearer " + connectionDTO.getBearer_token();
         
-		try {
+
 			System.out.println("TOKEN :-"+authorizationHeader);
 			 System.out.println("hatemm      ------- aminnnnnn ----(--"+cl.getName());
         jsonInputString =("{\r\n"
         		+ "    \"recipients\": [\r\n"
         		+ "        {\r\n"
-        		+ "            \"email\": \"amin.ayadi@esprit.tn\"\r\n"
+        		+ "            \"email\": \""+ cl.getEmail() +"\"\r\n"
         		+ "        }\r\n"
         		+ "    ],\r\n"
         		+ "    \"message\": \"Here's the file that we're collaborating on.\",\r\n"
-        		+ "    \"requireSignIn\": false,\r\n"
+        		+ "    \"requireSignIn\": true,\r\n"
         		+ "    \"sendInvitation\": true,\r\n"
         		+ "    \"roles\": [\r\n"
         		+ "        \"write\"\r\n"
         		+ "    ]\r\n"
         		+ "}");
-       
+        
+        System.out.println("JSON BODY : " + jsonInputString);
+		try {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url_str))
@@ -159,7 +177,7 @@ public class ClientService {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
+        System.out.println("share ok : " + response.body());
         
         
         return "fatma fatma fatma";
