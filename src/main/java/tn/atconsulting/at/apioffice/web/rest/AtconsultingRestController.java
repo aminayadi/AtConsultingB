@@ -118,7 +118,7 @@ public class AtconsultingRestController {
     
     @PostMapping("/atconsulting/service")
     public  ResponseEntity<String> getService(@RequestBody ConnectionDTO connectionDTO) {
-        return atconsultingservice.nodeTest(connectionDTO);
+        return atconsultingservice.getClients(connectionDTO);
     }
     
     @PostMapping("/atconsulting/subfolder")
