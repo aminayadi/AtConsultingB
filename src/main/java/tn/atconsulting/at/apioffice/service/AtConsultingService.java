@@ -50,7 +50,7 @@ public class AtConsultingService {
 
 	
 	@SuppressWarnings("deprecation")
-	public ResponseEntity<String> nodeTest(ConnectionDTO connectionDTO) {
+	public ResponseEntity<String> getClients(ConnectionDTO connectionDTO) {
 	    try {
 	    	HttpURLConnection con = null;
 	        String url_str = // "https://graph.microsoft.com/v1.0/me";
